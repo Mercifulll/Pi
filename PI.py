@@ -35,7 +35,7 @@ def MonteCarloMulti(pointsPerThread, numThreads):
 
 totalPoints = 1000000
 startTime = time.time()
-print(f'Значення π в одному потоці = {MonteCarloSingle(totalPoints)}')
+print(f'Значення π в одному потоці: {MonteCarloSingle(totalPoints)}')
 endTime = time.time()
 executionTime = endTime - startTime
 print(f'Час виконання: {executionTime:.3f} сек')
@@ -43,7 +43,7 @@ print(f'Час виконання: {executionTime:.3f} сек')
 numThreads = 4
 pointsPerThread = totalPoints // numThreads  #кількість точок на кожен потік
 startTime = time.time()
-print(f"Значення π з використанням багатопотоковості ({numThreads} потоки) = {MonteCarloMulti(pointsPerThread, numThreads)}")
+print(f"Значення π з використанням багатопотоковості ({numThreads} потоки): {MonteCarloMulti(pointsPerThread, numThreads)}")
 endTime = time.time()
 executionTime = endTime - startTime
 print(f'Час виконання: {executionTime:.3f} сек')
