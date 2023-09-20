@@ -11,20 +11,23 @@ def MonteCarloSingle(points):
             insideCircle += 1
     return (insideCircle/points) * 4
 
+def ThreadFunction(points, data, key):
+    #nonlocal insideCircle #змінна з батьківської функції
+    insideCircleThread = 0
+    for i in range(points):
+        x, y = random.random(), random.random()
+        if math.sqrt(x**2 + y**2) <= 1:
+            insideCircleThread += 1
+    data[key] = insideCircleThread;
+
+
 def MonteCarloMulti(pointsPerThread, numThreads):
     insideCircle = 0
     threadList = list()
-    def ThreadFunction(points):
-        nonlocal insideCircle #змінна з батьківської функції
-        insideCircleThread = 0
-        for i in range(points):
-            x, y = random.random(), random.random()
-            if math.sqrt(x**2 + y**2) <= 1:
-                insideCircleThread += 1
-        insideCircle += insideCircleThread
+    shared_data = {}
 
     for i in range(numThreads):
-        thread = threading.Thread(target=ThreadFunction, args=(pointsPerThread,)) #target вказує на функцію, яка буде виконуватися в окремому потоці
+        thread = threading.Thread(target=ThreadFunction, args=(pointsPerThread, shared_data, i)) #target вказує на функцію, яка буде виконуватися в окремому потоці
         threadList.append(thread)
         thread.start()
 
@@ -32,9 +35,12 @@ def MonteCarloMulti(pointsPerThread, numThreads):
     for thread in threadList:
         thread.join()
 
+    for i in range(numThreads):
+        insideCircle = insideCircle + shared_data[i]
+
     return (insideCircle / (pointsPerThread * numThreads)) * 4
 
-totalPoints = 100000000
+totalPoints = 10000000
 startTime = time.time()
 print(f'Значення π в одному потоці = {MonteCarloSingle(totalPoints)}')
 endTime = time.time()
