@@ -46,4 +46,4 @@ startTime = time.time()
 print(f"Значення π з використанням багатопотоковості ({numThreads} потоки): {MonteCarloMulti(pointsPerThread, numThreads)}")
 endTime = time.time()
 executionTime = endTime - startTime
-print(f'Час виконання: {executionTime:.3f}сек')
+print(f'Час виконання: {executionTime:.3f} сек')
