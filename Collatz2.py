@@ -30,7 +30,7 @@ def calculate_collatz_range(numbers, results):
             mutex.release()
 
 
-if name == "main":
+if __name__ == "main":
     N = int(input("Введіть натуральне число: "))
     num_threads = 10
 
